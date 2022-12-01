@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -23,6 +25,9 @@ public class Playlist {
     private String name;
 
     private String description;
+
+    @NaturalId
+    private String idPlay;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
@@ -40,6 +45,17 @@ public class Playlist {
     public Playlist (String name, String description){
         this.name = name;
         this.description = description;
+    }
+
+    public boolean equals(Playlist p){
+        if (this == p) return true;
+        if (p == null || getClass() != p.getClass()) return false;
+        Playlist playlist = (Playlist) p;
+        return Objects.equals(idPlay, playlist.idPlay);
+    }
+
+    public int hashCode(){
+        return Objects.hash(idPlay);
     }
 
 
