@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.trianafy.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.salesianostriana.dam.trianafy.dto.CreateSongDTO;
 import com.salesianostriana.dam.trianafy.dto.GetSongDTO;
 import com.salesianostriana.dam.trianafy.dto.SongDtoConverter;
@@ -9,6 +10,7 @@ import com.salesianostriana.dam.trianafy.model.Song;
 import com.salesianostriana.dam.trianafy.repos.ArtistRepository;
 import com.salesianostriana.dam.trianafy.repos.SongRepository;
 import com.salesianostriana.dam.trianafy.service.SongService;
+import com.salesianostriana.dam.trianafy.views.View;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -265,6 +267,11 @@ public class SongController {
 
 
         return ResponseEntity.ok(getSongDTO);
+    }
+    @GetMapping("/song/view")
+    @JsonView(View.Base.class)
+    List<Song> getSongs(){
+        return songService.findAll();
     }
 
 
